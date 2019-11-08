@@ -9,6 +9,14 @@ from cryptography.hazmat.primitives.asymmetric import utils
 from cryptography.hazmat.primitives.asymmetric import padding
 
 
+class RunResult:
+    def __init__(self):
+        self.UTF8EncodedData = ""
+        self.HashedData = ""
+        self.SignedData = ""
+        self.EncodedData = ""
+
+
 def bytes_to_text(text_bytes):
     text = ''
     for b in text_bytes:
