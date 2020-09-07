@@ -61,34 +61,83 @@ def encode_bytes(signed_hash):
     return base64.encodebytes(signed_hash)
 
 
+def DoHash(text):
+    print("RunHash")
+    print('Using:', text)
+
+    encoded_bytes = encode_text(text)
+    print('UTF8EncodedData:',  bytes_to_text(encoded_bytes))
+
+    hashed_text = hash_text(encoded_bytes)
+    print('HashedData (SHA256):', hash_to_text(hashed_text))
+
+    return hashed_text
+
+
+def DoSign(arguments, hashed_text):
+    print("RunSign")
+    print("Using:", hash_to_text(hashed_text))
+
+    signed_bytes = sign_hash(hashed_text.digest(), arguments.keyfile)
+    print('SignedData:', bytes_to_text(signed_bytes))
+
+    return signed_bytes
+
+
+def DoEncode(signed_bytes):
+    print("RunEncode")
+    print("Using:", bytes_to_text(signed_bytes))
+
+    encoded_text = encode_bytes(signed_bytes)
+    print('EncodedData:', encoded_text.decode('utf-8').replace("\n", ""))
+
+    return encoded_text
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Hash, Sign and Encode text for FI.API')
-    parser.add_argument('text', action='store')
+    parser.add_argument('command', action='store')
+    parser.add_argument('-t', '--text', action='store', required=False)
+    parser.add_argument('-f', '--file', action='store', required=False)
     parser.add_argument('-k', '--keyfile', action='store', required=True)
 
     try:
         arguments = parser.parse_args()
 
-        print("RunHash")
-        print('Using:', arguments.text)
+        text = arguments.text
 
-        encoded_bytes = encode_text(arguments.text)
-        print('UTF8EncodedData:',  bytes_to_text(encoded_bytes))
+        if not text:
+            if arguments.file:
+                with open(arguments.file) as file:
+                    text = file.read()
 
-        hashed_text = hash_text(encoded_bytes)
-        print('HashedData (SHA256):', hash_to_text(hashed_text))
+        if not text:
+            raise Exception('Must specify text or file')
 
-        print()
-        print("RunSign")
-        print("Using:", hash_to_text(hashed_text))
-        signed_bytes = sign_hash(hashed_text.digest(), arguments.keyfile)
-        print('SignedData:', bytes_to_text(signed_bytes))
+        command = arguments.command.lower()
 
-        print()
-        print("RunEncode")
-        print("Using:", bytes_to_text(signed_bytes))
-        encoded_text = encode_bytes(signed_bytes)
-        print('EncodedData:', encoded_text.decode('utf-8').replace("\n", ""))
+        if (command == "hashsignencode"):
+            hashed_text = DoHash(text)
+
+            print()
+            signed_bytes = DoSign(arguments, hashed_text)
+
+            print()
+            DoEncode(signed_bytes)
+
+        elif (command == "hash"):
+            DoHash(text)
+
+        elif (command == "sign"):
+            print("Not yet implemented")
+            #DoSign
+            
+        elif (command == "encode"):
+            print("Not yet implemented")
+            #DoEncode
+        
+        else:
+            raise Exception("Invalid command - " + arguments.command)
 
     except argparse.ArgumentError:
         parser.print_help()
