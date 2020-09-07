@@ -97,27 +97,28 @@ def DoEncode(signed_bytes):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Hash, Sign and Encode text for FI.API')
     parser.add_argument('command', action='store')
-    parser.add_argument('-t', '--text', action='store', required=False)
+    parser.add_argument('-d', '--data', action='store', required=False)
     parser.add_argument('-f', '--file', action='store', required=False)
+    parser.add_argument('-p', '--provider', action='store', required=False, default='FileName')
     parser.add_argument('-k', '--keyfile', action='store', required=True)
 
     try:
         arguments = parser.parse_args()
 
-        text = arguments.text
+        data = arguments.data
 
-        if not text:
+        if not data:
             if arguments.file:
                 with open(arguments.file) as file:
-                    text = file.read()
+                    data = file.read()
 
-        if not text:
+        if not data:
             raise Exception('Must specify text or file')
 
         command = arguments.command.lower()
 
         if (command == "hashsignencode"):
-            hashed_text = DoHash(text)
+            hashed_text = DoHash(data)
 
             print()
             signed_bytes = DoSign(arguments, hashed_text)
@@ -126,7 +127,7 @@ if __name__ == "__main__":
             DoEncode(signed_bytes)
 
         elif (command == "hash"):
-            DoHash(text)
+            DoHash(data)
 
         elif (command == "sign"):
             print("Not yet implemented")

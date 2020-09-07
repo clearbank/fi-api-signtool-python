@@ -18,7 +18,7 @@ In the `Data` folder there are files necessary for this example:
 ## Usage
 
 ```cmd
-> python hash_sign_encode.py HashSignEncode -f ..\Data\message.txt -k "..\Data\Reference1.PrivateKey.pem"
+> python hash_sign_encode.py HashSignEncode -f Data\message.txt -k Data\Reference1.PrivateKey.pem
 
 RunHash
 Using: { "Message": "Hello World" }
