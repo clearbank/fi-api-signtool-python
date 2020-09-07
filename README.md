@@ -13,7 +13,7 @@ It provides diagnostic output at each stage so users can verify against their ow
 
 ## Availability
 
-Packaged as Python source code this is targeted at version 3, tested using Python 3.6 and 3.8.
+Packaged as Python source code this is targeted at version 3, tested using Python 3.6 and 3.8 on various platforms.
 
 From the root respository directory, it can be called using:
 
@@ -45,7 +45,7 @@ python hash_sign_encode.py HashSignEncode -f [filename] -p FileName -k "C:\MyPri
 - -p [provider] - specifies the Signing provider (`FileName`)
 - -v [connectionstring] - specifies the connection details to Azure KeyVault (`Url=;KeyName=;ClientId=;ClientSecret=;`)
 
->NOTE: This version only supports local files containing keys; it does not support keys coming from Azure KeyVault.
+>NOTE: This version only supports local files containing keys; it does not yet support keys coming from Azure KeyVault.
 
 Should produce output similar to:
 
