@@ -96,11 +96,11 @@ def DoEncode(signed_bytes):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Hash, Sign and Encode text for FI.API')
-    parser.add_argument('command', action='store')
-    parser.add_argument('-d', '--data', action='store', required=False)
-    parser.add_argument('-f', '--file', action='store', required=False)
-    parser.add_argument('-p', '--provider', action='store', required=False, default='FileName')
-    parser.add_argument('-k', '--keyfile', action='store', required=True)
+    parser.add_argument('command', help='HashSignEncode, Hash, Sign, Encode', action='store')
+    parser.add_argument('-d', '--data', help='The raw data to hash', action='store', required=False)
+    parser.add_argument('-f', '--file', help='The filename containing the data to hash', action='store', required=False)
+    parser.add_argument('-p', '--provider', help='The type of Signing Provider (FileName)', action='store', required=False, default='FileName')
+    parser.add_argument('-k', '--keyfile', help='The Private Key filename to use for signing', action='store', required=True)
 
     try:
         arguments = parser.parse_args()
