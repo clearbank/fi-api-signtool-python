@@ -15,7 +15,13 @@ It provides diagnostic output at each stage so users can verify against their ow
 
 Packaged as Python source code this is targeted at version 3, tested using Python 3.6 and 3.8 on various platforms.
 
-From the root respository directory, it can be called using:
+This sample using some external python packages. Install and get your environemnt set up using :
+
+```cmd
+pip install -r requirements.txt
+```
+
+From the root respository directory, it can then be called using:
 
 ``` cmd
 python hash_sign_encode.py [command] [arguments]
